@@ -1,0 +1,26 @@
+/* responsive.css
+ * Mobile / small-screen overrides. Kept last so they win the cascade.
+ */
+
+@media (max-width: 640px) {
+  .hero { padding: 40px 20px; }
+  .lang-buttons { grid-template-columns: 1fr; }
+
+  .train-card { padding: 24px 18px; }
+  .sentence-box { padding: 22px 16px; min-height: 150px; }
+
+  .summary-grid { grid-template-columns: 1fr; }
+
+  .row { grid-template-columns: 40px 1fr auto; }
+  .row__text { white-space: normal; }
+  .row__miss { display: none; }
+
+  .stats {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .stat {
+    flex: 1;
+    min-width: 0;
+  }
+}

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Typing Trainer</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Poppins:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Styles (loaded directly so @import is not required) -->
+  <link rel="stylesheet" href="./css/base.css" />
+  <link rel="stylesheet" href="./css/start.css" />
+  <link rel="stylesheet" href="./css/training.css" />
+  <link rel="stylesheet" href="./css/results.css" />
+  <link rel="stylesheet" href="./css/responsive.css" />
+</head>
+<body>
+  <main class="app" id="app">
+    <!-- Start Screen -->
+    <section class="screen active" id="screen-start" data-screen="start">
+      <div class="hero">
+        <span class="badge"><span class="dot"></span> Practice Anywhere</span>
+        <h1 class="hero__title">Typing Trainer</h1>
+        <p class="hero__subtitle">
+          Boost your typing speed and accuracy with 10 quick sentences.
+          Choose your language and start training. No signup, no fuss.
+        </p>
+
+        <div class="lang-buttons">
+          <button class="lang-btn lang-btn--en" data-lang="en" aria-label="Practice English">
+            <span class="lang-btn__flag">🇬🇧</span>
+            <span class="lang-btn__label">English</span>
+            <span class="lang-btn__small">Start training</span>
+          </button>
+          <button class="lang-btn lang-btn--ar" data-lang="ar" aria-label="Practice Arabic">
+            <span class="lang-btn__flag">🇸🇦</span>
+            <span class="lang-btn__label">العربية</span>
+            <span class="lang-btn__small">ابدا التدريب</span>
+          </button>
+        </div>
+
+        <div class="features">
+          <span class="feature">⚡ 10 sentences</span>
+          <span class="feature">⏱ Live timer</span>
+          <span class="feature">🎯 Mistake tracking</span>
+          <span class="feature">📊 Detailed results</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Training Screen -->
+    <section class="screen" id="screen-train" data-screen="train">
+      <div class="train-card">
+        <header class="train-top">
+          <div class="progress-info">
+            Sentence <strong id="prog-current">1</strong> /
+            <strong id="prog-total">10</strong>
+          </div>
+          <div class="stats">
+            <div class="stat stat--timer">
+              <span class="stat__value" id="stat-timer">0.0s</span>
+              <span class="stat__label">Time</span>
+            </div>
+            <div class="stat stat--mistakes">
+              <span class="stat__value" id="stat-mistakes">0</span>
+              <span class="stat__label">Mistakes</span>
+            </div>
+          </div>
+        </header>
+
+        <div class="progress-bar">
+          <div class="progress-bar__fill" id="prog-fill"></div>
+        </div>
+
+        <div class="sentence-box" id="sentence-box" tabindex="0">
+          <div class="sentence" id="sentence"></div>
+          <input
+            type="text"
+            class="hidden-input"
+            id="hidden-input"
+            autocomplete="off"
+            autocapitalize="off"
+            autocorrect="off"
+            spellcheck="false"
+            aria-hidden="true"
+          />
+        </div>
+
+        <p class="hint">
+          Just start typing. Use <kbd>Backspace</kbd> to fix mistakes.
+        </p>
+
+        <div class="train-bottom">
+          <button class="ghost-btn" id="btn-quit">← Back to start</button>
+          <button class="ghost-btn" id="btn-skip">Skip sentence →</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Results Screen -->
+    <section class="screen" id="screen-results" data-screen="results">
+      <div class="results">
+        <h2 class="results__title">🎉 Well done!</h2>
+        <p class="results__lead">Here is how you performed.</p>
+
+        <div class="summary-grid">
+          <div class="summary-card">
+            <div class="summary-card__icon">⏱</div>
+            <div class="summary-card__value" id="sum-total">0s</div>
+            <div class="summary-card__label">Total time</div>
+          </div>
+          <div class="summary-card">
+            <div class="summary-card__icon">📈</div>
+            <div class="summary-card__value" id="sum-avg">0s</div>
+            <div class="summary-card__label">Avg per sentence</div>
+          </div>
+          <div class="summary-card">
+            <div class="summary-card__icon">🎯</div>
+            <div class="summary-card__value" id="sum-miss">0</div>
+            <div class="summary-card__label">Total mistakes</div>
+          </div>
+        </div>
+
+        <div class="breakdown">
+          <h3 class="breakdown__title">Per-sentence breakdown</h3>
+          <div class="breakdown__rows" id="breakdown-rows"></div>
+        </div>
+
+        <div class="train-again-wrap">
+          <button class="train-again" id="btn-again">Train Again</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!--
+    Scripts: loaded as plain (non-module) files in dependency order so the
+    app works both via http(s) AND when index.html is opened directly via
+    file://. Each file attaches its export to a single `App` namespace.
+  -->
+  <script src="./js/data/sentences.js"></script>
+
+  <script src="./js/core/SentenceProvider.js"></script>
+  <script src="./js/core/Timer.js"></script>
+  <script src="./js/core/TypingEngine.js"></script>
+  <script src="./js/core/ResultsTracker.js"></script>
+  <script src="./js/core/SoundPlayer.js"></script>
+
+  <script src="./js/input/InputController.js"></script>
+
+  <script src="./js/ui/ScreenManager.js"></script>
+  <script src="./js/ui/Renderer.js"></script>
+  <script src="./js/ui/StartScreen.js"></script>
+  <script src="./js/ui/TrainingScreen.js"></script>
+  <script src="./js/ui/ResultsScreen.js"></script>
+
+  <script src="./js/app.js"></script>
+</body>
+</html>
